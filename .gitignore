@@ -24,3 +24,10 @@ yarn-error.log*
 node_modules
 .next
 .env
+
+# Backend (FastAPI / Python)
+backend/.env
+backend/venv/
+backend/__pycache__/
+*.pyc
+
