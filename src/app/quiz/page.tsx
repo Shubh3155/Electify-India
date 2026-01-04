@@ -1,6 +1,6 @@
 'use client';
 
-import AppLayout from '@/components/layout/AppLayout';
+// AppLayout is now provided globally via ConditionalLayout
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -115,7 +115,7 @@ export default function QuizPage() {
   const scorePercentage = (score / quizQuestions.length) * 100;
 
   return (
-    <AppLayout>
+    <>
       <div className="min-h-screen bg-gradient-to-b from-white to-slate-50 dark:from-dark-900 dark:to-dark-800 py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           {!quizCompleted ? (
@@ -275,6 +275,6 @@ export default function QuizPage() {
           )}
         </div>
       </div>
-    </AppLayout>
+    </>
   );
 }

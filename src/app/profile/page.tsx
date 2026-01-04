@@ -2,181 +2,121 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import DashboardLayout from '@/components/layout/DashboardLayout';
 
 export default function ProfilePage() {
-  // Mock user data
-  const [userData, setUserData] = useState({
-    name: 'random_user',
-    email: 'random@gmail.com',
-    school: 'Government Higher Secondary School',
-    grade: '10th',
-    interests: ['Science', 'Mathematics', 'Computer Science'],
-    quizResults: [
-      { id: 1, date: '2023-10-15', score: 85, recommendation: 'Science' },
-      { id: 2, date: '2023-09-01', score: 78, recommendation: 'Science' },
+  const [userData] = useState({
+    name: 'Citizen User',
+    email: 'citizen@gmail.com',
+    voterStatus: 'Eligible Voter',
+    language: 'English',
+    modulesCompleted: 4,
+    totalModules: 7,
+    quizzesAttempted: 6,
+    avgScore: 82,
+    factChecksUsed: 12,
+    blindReadUsed: 5,
+    recentActivity: [
+      'ONOE: Pros & Challenges',
+      'Myth vs Fact Quiz',
+      'How Indian Elections Work'
     ],
   });
 
   return (
-    <DashboardLayout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="md:flex md:items-center md:justify-between mb-6">
-          <div className="flex-1 min-w-0">
-            <h2 className="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:text-3xl sm:truncate">
-              Profile
-            </h2>
-          </div>
-          <div className="mt-4 flex md:mt-0 md:ml-4">
-            <button
-              type="button"
-              className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-            >
-              Edit Profile
-            </button>
-          </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+          My Profile
+        </h2>
+        <button className="px-4 py-2 rounded-md bg-primary-600 text-white hover:bg-primary-700">
+          Edit Profile
+        </button>
+      </div>
+
+      {/* Personal Info */}
+      <div className="bg-white dark:bg-gray-800 shadow rounded-lg mb-8">
+        <div className="px-6 py-4 border-b dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Citizen Information
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Your basic account and voter details.
+          </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
-              Personal Information
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
-              Your personal details and preferences.
-            </p>
-          </div>
-          <div className="border-t border-gray-200 dark:border-gray-700">
-            <dl>
-              <div className="bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Full name
-                </dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
-                  {userData.name}
-                </dd>
-              </div>
-              <div className="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Email address
-                </dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
-                  {userData.email}
-                </dd>
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  School
-                </dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
-                  {userData.school}
-                </dd>
-              </div>
-              <div className="bg-white dark:bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Grade
-                </dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
-                  {userData.grade}
-                </dd>
-              </div>
-              <div className="bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  Interests
-                </dt>
-                <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
-                  <div className="flex flex-wrap gap-2">
-                    {userData.interests.map((interest) => (
-                      <span
-                        key={interest}
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200"
-                      >
-                        {interest}
-                      </span>
-                    ))}
-                  </div>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-
-        <div className="mt-8 bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
-              Quiz History
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
-              Your previous quiz attempts and results.
-            </p>
-          </div>
-          <div className="border-t border-gray-200 dark:border-gray-700">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-900">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                    >
-                      Date
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                    >
-                      Score
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                    >
-                      Recommendation
-                    </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">View</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                  {userData.quizResults.map((result) => (
-                    <tr key={result.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(result.date).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        {result.score}%
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
-                          {result.recommendation}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a
-                          href="#"
-                          className="text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300"
-                        >
-                          View
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <Link
-            href="/dashboard"
-            className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
-          >
-            ← Back to Dashboard
-          </Link>
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Info label="Name" value={userData.name} />
+          <Info label="Email" value={userData.email} />
+          <Info label="Voter Status" value={userData.voterStatus} />
+          <Info label="Preferred Language" value={userData.language} />
         </div>
       </div>
-    </DashboardLayout>
+
+      {/* Learning Progress */}
+      <div className="bg-white dark:bg-gray-800 shadow rounded-lg mb-8">
+        <div className="px-6 py-4 border-b dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Learning Progress
+          </h3>
+        </div>
+
+        <div className="p-6 space-y-4">
+          <Progress label="Modules Completed" value={`${userData.modulesCompleted}/${userData.totalModules}`} />
+          <Progress label="Quizzes Attempted" value={userData.quizzesAttempted} />
+          <Progress label="Average Quiz Score" value={`${userData.avgScore}%`} />
+          <Progress label="Fact Checks Used" value={userData.factChecksUsed} />
+          <Progress label="Blind Read Sessions" value={userData.blindReadUsed} />
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="bg-white dark:bg-gray-800 shadow rounded-lg mb-8">
+        <div className="px-6 py-4 border-b dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Recently Viewed
+          </h3>
+        </div>
+
+        <ul className="p-6 space-y-3">
+          {userData.recentActivity.map((item, index) => (
+            <li
+              key={index}
+              className="p-3 rounded-md bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Back */}
+      <Link
+        href="/dashboard"
+        className="text-primary-600 dark:text-primary-400 hover:underline"
+      >
+        ← Back to Dashboard
+      </Link>
+    </div>
+  );
+}
+
+/* Helper Components */
+function Info({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
+      <p className="text-base font-medium text-gray-900 dark:text-white">{value}</p>
+    </div>
+  );
+}
+
+function Progress({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="flex justify-between items-center">
+      <span className="text-gray-600 dark:text-gray-300">{label}</span>
+      <span className="font-semibold text-gray-900 dark:text-white">{value}</span>
+    </div>
   );
 }

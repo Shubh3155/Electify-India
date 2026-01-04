@@ -6,15 +6,13 @@ import LanguageToggle from '../ui/LanguageToggle';
 import ThemeToggle from '../ui/ThemeToggle';
 import { useState } from 'react';
 
-// ✅ Centralized nav links for reuse
+// ✅ Centralized nav links for reuse (aligned with existing homepage section IDs)
 const navLinks = [
-  { href: '/', label: 'Home', type: 'section' },
-  { href: '#about', label: 'About', type: 'section' },
-  { href: '#challenges', label: 'Challenges', type: 'section' },
+  { href: '#home', label: 'Home', type: 'section' },
+  { href: '#how-it-works', label: 'How It Works', type: 'section' },
   { href: '#why', label: 'Why', type: 'section' },
+  { href: '#values', label: 'Values', type: 'section' },
   { href: '#features', label: 'Features', type: 'section' },
-  { href: '#stories', label: 'Stories', type: 'section' },
-  { href: '#feedback', label: 'Feedback', type: 'section' },
 ];
 
 export default function NewHeader() {
@@ -36,26 +34,26 @@ export default function NewHeader() {
 
           {/* Desktop Nav */}
           <div className="flex space-x-8">
-  {navLinks.map((link) =>
-    link.type === 'section' ? (
-      <a
-        key={link.href}
-        href={link.href}
-        className="text-gray-800 dark:text-white hover:text-green-600 dark:hover:text-green-500 px-3 py-2 text-sm font-medium"
-      >
-        {link.label}
-      </a>
-    ) : (
-      <Link
-        key={link.href}
-        href={link.href}
-        className="text-gray-800 dark:text-white hover:text-green-600 dark:hover:text-green-500 px-3 py-2 text-sm font-medium"
-      >
-        {link.label}
-      </Link>
-    )
-  )}
-</div>
+            {navLinks.map((link) =>
+              link.type === 'section' ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-800 dark:text-white hover:text-green-600 dark:hover:text-green-500 px-3 py-2 text-sm font-medium"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-800 dark:text-white hover:text-green-600 dark:hover:text-green-500 px-3 py-2 text-sm font-medium"
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
+          </div>
 
           {/* Right side buttons */}
           <div className="hidden md:flex md:items-center space-x-4">
@@ -103,15 +101,26 @@ export default function NewHeader() {
           <div className="md:hidden">
             <div className="pt-2 pb-3 space-y-1">
               {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  scroll={false}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-white hover:text-green-600 dark:hover:text-green-500 hover:bg-gray-50 dark:hover:bg-dark-800"
-                >
-                  {link.label}
-                </Link>
+                link.type === 'section' ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-white hover:text-green-600 dark:hover:text-green-500 hover:bg-gray-50 dark:hover:bg-dark-800"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    scroll={false}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-white hover:text-green-600 dark:hover:text-green-500 hover:bg-gray-50 dark:hover:bg-dark-800"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
 
               <div className="flex items-center space-x-4 px-3 py-2">

@@ -1,6 +1,6 @@
 'use client';
 
-import AppLayout from '@/components/layout/AppLayout';
+// AppLayout is now provided globally via ConditionalLayout
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -66,8 +66,8 @@ export default function ChatbotPage() {
         "Tell me about the history of simultaneous elections in India"
     ];
 
-    return (
-        <AppLayout>
+  return (
+    <>
             <div className="h-screen flex flex-col bg-gradient-to-b from-white to-slate-50 dark:from-dark-900 dark:to-dark-800">
                 {/* Header */}
                 <div className="bg-white dark:bg-dark-800 border-b border-slate-200 dark:border-dark-700 p-6">
@@ -169,6 +169,6 @@ export default function ChatbotPage() {
                     </div>
                 </div>
             </div>
-        </AppLayout>
-    );
+    </>
+  );
 }

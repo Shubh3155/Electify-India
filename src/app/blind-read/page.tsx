@@ -1,6 +1,6 @@
 'use client';
 
-import AppLayout from '@/components/layout/AppLayout';
+// AppLayout is now provided globally via ConditionalLayout
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -72,12 +72,13 @@ export default function BlindReadPage() {
     const handleReset = () => {
         setBlindReadEnabled(false);
         setAnonymizedText('');
+        setInputText('');
     };
 
     const sampleText = `The Prime Minister announced that the BJP supports One Nation One Election. The Congress party has raised concerns about its impact on federalism. The Chief Minister of the state said that regional parties like TMC and DMK need to be consulted.`;
 
     return (
-        <AppLayout>
+        <>
             <div className="min-h-screen bg-gradient-to-b from-white to-slate-50 dark:from-dark-900 dark:to-dark-800 py-12">
                 <div className="container mx-auto px-4 max-w-6xl">
                     {/* Header */}
@@ -124,7 +125,7 @@ export default function BlindReadPage() {
                         </div>
                     </div>
 
-                    {!blindReadEnabled ? (
+                    {!inputText.trim() ? (
                         /* Input Mode */
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -165,31 +166,13 @@ export default function BlindReadPage() {
                                 </div>
                             </div>
                         </motion.div>
-                    ) : (
-                        /* Comparison View */
+                    ) : blindReadEnabled ? (
+                        /* Blind Read Only View */
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                            className="max-w-4xl mx-auto"
                         >
-                            {/* Original Text */}
-                            <div className="bg-white dark:bg-dark-800 rounded-xl shadow-lg p-6 border border-slate-100 dark:border-dark-700">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h2 className="text-xl font-bold text-gray-800 dark:text-dark-50">
-                                        Original Text
-                                    </h2>
-                                    <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-full">
-                                        With Names
-                                    </span>
-                                </div>
-                                <div className="prose dark:prose-invert max-w-none">
-                                    <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
-                                        {inputText}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Anonymized Text */}
                             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl shadow-lg p-6 border border-purple-200 dark:border-purple-800">
                                 <div className="flex items-center justify-between mb-4">
                                     <h2 className="text-xl font-bold text-purple-900 dark:text-purple-100">
@@ -204,16 +187,61 @@ export default function BlindReadPage() {
                                         {anonymizedText}
                                     </p>
                                 </div>
+                                <div className="mt-6 flex justify-end space-x-3">
+                                    <button
+                                        onClick={handleCopyText}
+                                        className="px-4 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all"
+                                    >
+                                        Copy
+                                    </button>
+                                    <button
+                                        onClick={() => setBlindReadEnabled(false)}
+                                        className="px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-all"
+                                    >
+                                        Disable Blind Read
+                                    </button>
+                                </div>
                             </div>
-
-                            {/* Action Buttons */}
-                            <div className="lg:col-span-2 flex justify-center space-x-4">
+                            <div className="mt-4 flex justify-center">
                                 <button
-                                    onClick={handleCopyText}
-                                    className="px-6 py-3 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all"
+                                    onClick={handleReset}
+                                    className="px-6 py-3 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-all"
                                 >
-                                    Copy Anonymized Text
+                                    Try Another Text
                                 </button>
+                            </div>
+                        </motion.div>
+                    ) : (
+                        /* Original Only View */
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="max-w-4xl mx-auto"
+                        >
+                            <div className="bg-white dark:bg-dark-800 rounded-xl shadow-lg p-6 border border-slate-100 dark:border-dark-700">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h2 className="text-xl font-bold text-gray-800 dark:text-dark-50">
+                                        Original Text
+                                    </h2>
+                                    <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-full">
+                                        With Names
+                                    </span>
+                                </div>
+                                <div className="prose dark:prose-invert max-w-none">
+                                    <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
+                                        {inputText}
+                                    </p>
+                                </div>
+                                <div className="mt-6 flex justify-end">
+                                    <button
+                                        onClick={handleEnableBlindRead}
+                                        className="px-4 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all"
+                                    >
+                                        Enable Blind Read
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="mt-4 flex justify-center">
                                 <button
                                     onClick={handleReset}
                                     className="px-6 py-3 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-all"
@@ -225,6 +253,6 @@ export default function BlindReadPage() {
                     )}
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

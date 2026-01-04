@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const navigationItems = [
     {
-        name: 'Home',
+        name: 'Dashboard',
         href: '/dashboard',
         icon: (
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,7 +15,7 @@ const navigationItems = [
         )
     },
     {
-        name: 'Learn ONOE',
+        name: 'Learning Module',
         href: '/learn',
         icon: (
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -25,7 +24,7 @@ const navigationItems = [
         )
     },
     {
-        name: 'Interactive Quiz',
+        name: 'Facts vs Myths',
         href: '/quiz',
         icon: (
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,7 +33,7 @@ const navigationItems = [
         )
     },
     {
-        name: 'Facts vs Misinfo',
+        name: 'Check a Fact',
         href: '/fact-check',
         icon: (
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,6 +78,15 @@ const navigationItems = [
         )
     },
     {
+        name: 'Profile',
+        href: '/profile',
+        icon: (
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A9.969 9.969 0 0112 15c2.5 0 4.847.93 6.879 2.475M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        )
+    },
+    {
         name: 'Settings',
         href: '/settings',
         icon: (
@@ -101,53 +109,16 @@ const navigationItems = [
 
 export default function Sidebar() {
     const pathname = usePathname();
-    const [isCollapsed, setIsCollapsed] = useState(false);
-    const [isMobileOpen, setIsMobileOpen] = useState(false);
 
     return (
         <>
-            {/* Mobile Menu Button */}
-            <button
-                onClick={() => setIsMobileOpen(!isMobileOpen)}
-                className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-slate-700 text-white shadow-lg"
-                aria-label="Toggle menu"
-            >
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {isMobileOpen ? (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    ) : (
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    )}
-                </svg>
-            </button>
-
-            {/* Mobile Overlay */}
-            <AnimatePresence>
-                {isMobileOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setIsMobileOpen(false)}
-                        className="lg:hidden fixed inset-0 bg-black/50 z-40"
-                    />
-                )}
-            </AnimatePresence>
+            {/* Sidebar is permanently visible and fixed */}
 
             {/* Sidebar */}
             <motion.aside
                 initial={false}
-                animate={{
-                    width: isCollapsed ? '80px' : '280px',
-                    x: isMobileOpen ? 0 : '-100%'
-                }}
-                className={`
-          fixed lg:relative inset-y-0 left-0 z-40
-          bg-slate-800 dark:bg-slate-900 text-white
-          flex flex-col shadow-xl
-          transition-all duration-300
-          lg:translate-x-0
-        `}
+                animate={{ width: '280px', x: 0 }}
+                className="fixed inset-y-0 left-0 z-40 w-[280px] bg-slate-800 dark:bg-slate-900 text-white flex flex-col shadow-xl"
             >
                 {/* Logo/Brand */}
                 <div className="p-6 border-b border-slate-700">
@@ -157,12 +128,10 @@ export default function Sidebar() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                         </div>
-                        {!isCollapsed && (
-                            <div>
-                                <h1 className="font-bold text-lg">Electify India</h1>
-                                <p className="text-xs text-slate-400">Understanding ONOE</p>
-                            </div>
-                        )}
+                        <div>
+                            <h1 className="font-bold text-lg">Electify India</h1>
+                            <p className="text-xs text-slate-400">Understanding ONOE</p>
+                        </div>
                     </Link>
                 </div>
 
@@ -175,7 +144,6 @@ export default function Sidebar() {
                                 <li key={item.href}>
                                     <Link
                                         href={item.href}
-                                        onClick={() => setIsMobileOpen(false)}
                                         className={`
                       flex items-center space-x-3 px-4 py-3 rounded-lg
                       transition-all duration-200
@@ -183,39 +151,18 @@ export default function Sidebar() {
                                                 ? 'bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-lg'
                                                 : 'text-slate-300 hover:bg-slate-700 hover:text-white'
                                             }
-                      ${isCollapsed ? 'justify-center' : ''}
                     `}
                                     >
                                         <span className={isActive ? 'scale-110' : ''}>
                                             {item.icon}
                                         </span>
-                                        {!isCollapsed && (
-                                            <span className="font-medium">{item.name}</span>
-                                        )}
+                                        <span className="font-medium">{item.name}</span>
                                     </Link>
                                 </li>
                             );
                         })}
                     </ul>
                 </nav>
-
-                {/* Collapse Toggle (Desktop only) */}
-                <div className="hidden lg:block p-4 border-t border-slate-700">
-                    <button
-                        onClick={() => setIsCollapsed(!isCollapsed)}
-                        className="w-full flex items-center justify-center px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors"
-                        aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-                    >
-                        <svg
-                            className={`h-5 w-5 transition-transform ${isCollapsed ? 'rotate-180' : ''}`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                        </svg>
-                    </button>
-                </div>
             </motion.aside>
         </>
     );
